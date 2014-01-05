@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.ContentObserver;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
@@ -71,6 +72,12 @@ public class Clock implements DemoMode {
     private boolean mDemoMode;
     private boolean mAttached;
 
+    public static final int FONT_BOLD = 0;
+    public static final int FONT_LIGHT = 1;
+    public static final int FONT_NORMAL = 2;
+
+    protected int mClockFontStyle = FONT_NORMAL;
+
     class SettingsObserver extends ContentObserver {
         SettingsObserver(Handler handler) {
             super(handler);
@@ -80,6 +87,9 @@ public class Clock implements DemoMode {
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_AM_PM), false, this);
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.STATUSBAR_CLOCK_FONT_STYLE), false,
+                    this, UserHandle.USER_ALL);
             updateSettings();
         }
 
@@ -259,6 +269,21 @@ public class Clock implements DemoMode {
         if (mDemoMode || mCalendar == null) return;
         mCalendar.setTimeInMillis(System.currentTimeMillis());
         mClockView.setText(getSmallTime());
+    }
+
+    public void getFontStyle(int font) {
+        switch (font) {
+            case FONT_BOLD:
+                setTypeface(Typeface.create("sans-serif", Typeface.BOLD));
+                break;
+            case FONT_LIGHT:
+                setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
+                break;
+            case FONT_NORMAL:
+            default:
+                setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
+                break;
+        }
     }
 
     public void updateClockView(TextView v) {
