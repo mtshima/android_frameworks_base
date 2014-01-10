@@ -73,8 +73,10 @@ public class Clock implements DemoMode {
     private boolean mAttached;
 
     public static final int FONT_BOLD = 0;
-    public static final int FONT_LIGHT = 1;
-    public static final int FONT_NORMAL = 2;
+    public static final int FONT_CONDENSED = 1;
+    public static final int FONT_LIGHT = 2;
+    public static final int FONT_LIGHT_ITALIC = 3;
+    public static final int FONT_NORMAL = 4;
 
     protected int mClockFontStyle = FONT_NORMAL;
 
@@ -276,8 +278,14 @@ public class Clock implements DemoMode {
             case FONT_BOLD:
                 setTypeface(Typeface.create("sans-serif", Typeface.BOLD));
                 break;
+            case FONT_CONDENSED:
+                setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
+                break;
             case FONT_LIGHT:
                 setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
+                break;
+            case FONT_LIGHT_ITALIC:
+                setTypeface(Typeface.create("sans-serif-light", Typeface.ITALIC));
                 break;
             case FONT_NORMAL:
             default:
