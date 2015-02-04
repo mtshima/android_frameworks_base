@@ -4405,6 +4405,18 @@ public final class Settings {
         public static final String DOZE_PULSE_ON_NOTIFICATIONS = "doze_pulse_on_notifications";
 
         /**
+         * Color of the text on the lock screen
+         * @hide
+         */
+        public static final String LOCK_SCREEN_TEXT_COLOR = "lock_screen_text_color";
+
+        /**
+         * Color of the icons on the lock screen
+         * @hide
+         */
+        public static final String LOCK_SCREEN_ICON_COLOR = "lock_screen_icon_color";
+
+        /**
          * Shake threshold for ambient display
          * @hide
          */

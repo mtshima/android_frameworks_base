@@ -316,6 +316,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private DozeServiceHost mDozeServiceHost;
     private boolean mScreenOnComingFromTouch;
     private PointF mScreenOnTouchLocation;
+    private boolean mQSCSwitch;
 
     int mPixelFormat;
     Object mQueueLock = new Object();
@@ -485,7 +486,14 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.SCREEN_BRIGHTNESS_MODE), false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_CLOCK), false, this, UserHandle.USER_ALL);
+                    Settings.System.STATUS_BAR_CLOCK),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LOCK_SCREEN_TEXT_COLOR),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LOCK_SCREEN_ICON_COLOR),
+                    false, this, UserHandle.USER_ALL);			
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.HEADS_UP_DISMISS_ON_REMOVE), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
@@ -560,6 +568,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                         mBatterySaverWarningColor = mContext.getResources()
                                 .getColor(com.android.internal.R.color.battery_saver_mode_color);
                     }
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.LOCK_SCREEN_TEXT_COLOR))
+                || uri.equals(Settings.System.getUriFor(
+                    Settings.System.LOCK_SCREEN_ICON_COLOR))) {
+                setKeyguardTextAndIconColors();
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.HEADS_UP_NOTIFCATION_DECAY))) {
                     mHeadsUpNotificationDecay = Settings.System.getIntForUser(
@@ -656,6 +669,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
             mHeadsUpTouchOutside = Settings.System.getInt(
                     resolver, Settings.System.HEADS_UP_TOUCH_OUTSIDE, 0) == 1;
+					
+            mQSCSwitch = Settings.System.getIntForUser(resolver,
+                    Settings.System.QS_COLOR_SWITCH, 0, mCurrentUserId) == 1;
 
             int sidebarPosition = Settings.System.getInt(
                     resolver, Settings.System.APP_SIDEBAR_POSITION, AppSidebar.SIDEBAR_POSITION_LEFT);
@@ -1441,6 +1457,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         startGlyphRasterizeHack();
         UpdateNotifDrawerClearAllIconColor();
+        setKeyguardTextAndIconColors();
+        updateBatteryLevelTextColor();
         return mStatusBarView;
     }
 
@@ -2632,6 +2650,40 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 0xffffffff, mCurrentUserId);
         if (mDismissView != null) {
             mDismissView.updateIconColor(color);
+
+    public void setKeyguardTextAndIconColors() {
+        int textColor =
+                Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.LOCK_SCREEN_TEXT_COLOR, 0xffffffff);
+        int iconColor =
+                Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.LOCK_SCREEN_ICON_COLOR, 0xffffffff);
+        if (mKeyguardBottomArea != null) {
+            mKeyguardBottomArea.updateTextColor(textColor);
+            mKeyguardBottomArea.updateIconColor(iconColor);
+        }
+    }
+
+    public void showClock(boolean show) {
+        if (mStatusBarView == null) return;
+        ContentResolver resolver = mContext.getContentResolver();
+        View clock = mStatusBarView.findViewById(R.id.clock);
+        View cclock = mStatusBarView.findViewById(R.id.center_clock);
+        View lclock = mStatusBarView.findViewById(R.id.left_clock);
+        if (mClockLocation == 0 && clock != null) {
+            clock.setVisibility(show ? (mShowClock ? View.VISIBLE : View.GONE) : View.GONE);
+        }
+        if (mClockLocation == 1 && cclock != null) {
+            cclock.setVisibility(show ? (mShowClock ? View.VISIBLE : View.GONE) : View.GONE);
+        }
+        if (mClockLocation == 2 && lclock != null) {
+            lclock.setVisibility(show ? (mShowClock ? View.VISIBLE : View.GONE) : View.GONE);
+        }
+    }
+
+    public void setClockAndDateStatus(int width, int mode, boolean enabled) {
+        if (mNotificationIcons != null) {
+            mNotificationIcons.setClockAndDateStatus(width, mode, enabled);
         }
     }
 
