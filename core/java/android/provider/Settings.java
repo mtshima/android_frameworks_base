@@ -2072,6 +2072,13 @@ public final class Settings {
 
 
         /**
+         * Whether to use the custom quick unlock screen control
+         * @hide
+         */
+        public static final String LOCKSCREEN_QUICK_UNLOCK_CONTROL =
+                "lockscreen_quick_unlock_control";
+
+        /**
          * A formatted string of the next alarm that is set, or the empty string
          * if there is no alarm set.
          *
@@ -6296,12 +6303,6 @@ public final class Settings {
                 = "status_bar_locked_on_secure_keyguard";
 
         /**
-         * Whether to use the custom quick unlock screen control
-         * @hide
-         */
-        public static final String LOCKSCREEN_QUICK_UNLOCK_CONTROL = "lockscreen_quick_unlock_control";
-
-        /**
          * Name of a package that the current user has explicitly allowed to see all of that
          * user's notifications.
          *
@@ -6632,8 +6633,7 @@ public final class Settings {
             PRIVACY_GUARD_DEFAULT,
             ADVANCED_REBOOT,
             DEVELOPMENT_SHORTCUT,
-            STATUS_BAR_LOCKED_ON_SECURE_KEYGUARD,
-            LOCKSCREEN_QUICK_UNLOCK_CONTROL
+            STATUS_BAR_LOCKED_ON_SECURE_KEYGUARD
         };
 
         /**
