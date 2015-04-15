@@ -613,6 +613,8 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
     }
 
     public void onUnlockMethodStateChanged() {
+        updateLockIcon();
+        updateCameraVisibility();
     }
 
     private void inflatePreviews() {
