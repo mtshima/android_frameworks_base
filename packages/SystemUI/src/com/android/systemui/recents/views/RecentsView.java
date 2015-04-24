@@ -338,9 +338,9 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
         final ContentResolver resolver = mContext.getContentResolver();
         int width = MeasureSpec.getSize(widthMeasureSpec);
         int height = MeasureSpec.getSize(heightMeasureSpec);
+
+        // Get the search bar bounds and measure the search bar layout
         Rect searchBarSpaceBounds = new Rect();
-        
-		// Get the search bar bounds and measure the search bar layout
         if (mSearchBar != null) {
             mConfig.getSearchBarBounds(width, height, mConfig.systemInsets.top, searchBarSpaceBounds);
             mSearchBar.measure(
@@ -376,7 +376,7 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
             } else {
                 params.topMargin = mContext.getResources().
                     getDimensionPixelSize(com.android.internal.R.dimen.status_bar_height)
-		        + searchBarSpaceBounds.height();
+                        + searchBarSpaceBounds.height();
             }
 
             switch (clearRecentsLocation) {
