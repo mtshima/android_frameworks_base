@@ -28,6 +28,8 @@ import com.android.internal.statusbar.IStatusBarService;
 import com.android.systemui.R;
 import com.android.systemui.statusbar.policy.KeyButtonView;
 
+import java.util.List;
+
 public final class NavigationBarTransitions extends BarTransitions {
 
     private static final int CONTENT_FADE_DURATION = 200;
@@ -83,15 +85,33 @@ public final class NavigationBarTransitions extends BarTransitions {
     private void applyMode(int mode, boolean animate, boolean force) {
         // apply to key buttons
         final float alpha = alphaForMode(mode);
-        setKeyButtonViewQuiescentAlpha(NavbarEditor.NAVBAR_HOME, alpha, animate);
-        setKeyButtonViewQuiescentAlpha(NavbarEditor.NAVBAR_RECENT, alpha, animate);
-        setKeyButtonViewQuiescentAlpha(NavbarEditor.NAVBAR_CONDITIONAL_MENU, alpha, animate);
-        setKeyButtonViewQuiescentAlpha(NavbarEditor.NAVBAR_ALWAYS_MENU, alpha, animate);
-        setKeyButtonViewQuiescentAlpha(NavbarEditor.NAVBAR_MENU_BIG, alpha, animate);
-        setKeyButtonViewQuiescentAlpha(mView.getImeSwitchButton(), alpha, animate);
-        setKeyButtonViewQuiescentAlpha(NavbarEditor.NAVBAR_POWER, alpha, animate);
 
         applyBackButtonQuiescentAlpha(mode, animate);
+        final View back = mView.getBackButton();
+        final View home = mView.getHomeButton();
+        final View recent = mView.getRecentsButton();
+        final View imeSwitch = mView.getImeSwitchButton();
+        if (back != null) {
+            setKeyButtonViewQuiescentAlpha(back, alpha, animate);
+        }
+        if (home != null) {
+            setKeyButtonViewQuiescentAlpha(home, alpha, animate);
+        }
+        if (recent != null) {
+            setKeyButtonViewQuiescentAlpha(recent, alpha, animate);
+        }
+        if (imeSwitch != null) {
+            setKeyButtonViewQuiescentAlpha(imeSwitch, alpha, animate);
+        }
+        List<Integer> buttonIdList = mView.getButtonIdList();
+        for (int i = 0; i < buttonIdList.size(); i++) {
+            final View customButton = mView.getCustomButton(buttonIdList.get(i));
+            if (customButton != null) {
+                setKeyButtonViewQuiescentAlpha(customButton, alpha, animate);
+            }
+        }
+        setKeyButtonViewQuiescentAlpha(mView.getLeftMenuButton(), alpha, animate);
+        setKeyButtonViewQuiescentAlpha(mView.getRightMenuButton(), alpha, animate);
 
         // apply to lights out
         applyLightsOut(isLightsOut(mode), animate, force);
@@ -104,16 +124,31 @@ public final class NavigationBarTransitions extends BarTransitions {
 
     public void applyBackButtonQuiescentAlpha(int mode, boolean animate) {
         float backAlpha = 0;
-        backAlpha = maxVisibleQuiescentAlpha(backAlpha, NavbarEditor.NAVBAR_HOME);
-        backAlpha = maxVisibleQuiescentAlpha(backAlpha, NavbarEditor.NAVBAR_RECENT);
-        backAlpha = maxVisibleQuiescentAlpha(backAlpha, NavbarEditor.NAVBAR_MENU_BIG);
-        backAlpha = maxVisibleQuiescentAlpha(backAlpha, NavbarEditor.NAVBAR_ALWAYS_MENU);
-        backAlpha = maxVisibleQuiescentAlpha(backAlpha, NavbarEditor.NAVBAR_CONDITIONAL_MENU);
-        backAlpha = maxVisibleQuiescentAlpha(backAlpha, mView.getImeSwitchButton());
-        backAlpha = maxVisibleQuiescentAlpha(backAlpha, NavbarEditor.NAVBAR_POWER);
-
+        View back = mView.getBackButton();
+        View home = mView.getHomeButton();
+        View recent = mView.getRecentsButton();
+        View ime = mView.getImeSwitchButton();
+        View leftMenu = mView.getLeftMenuButton();
+        View rightMenu = mView.getRightMenuButton();
+        if (home != null) {
+            backAlpha = maxVisibleQuiescentAlpha(backAlpha, home);
+        }
+        if (recent != null) {
+            backAlpha = maxVisibleQuiescentAlpha(backAlpha, recent);
+        }
+        if (rightMenu != null) {
+            backAlpha = maxVisibleQuiescentAlpha(backAlpha, mView.getRightMenuButton());
+        }
+        if (leftMenu != null) {
+            backAlpha = maxVisibleQuiescentAlpha(backAlpha, mView.getLeftMenuButton());
+        }
+        if (ime != null) {
+            backAlpha = maxVisibleQuiescentAlpha(backAlpha, mView.getImeSwitchButton());
+        }
         if (backAlpha > 0) {
-            setKeyButtonViewQuiescentAlpha(NavbarEditor.NAVBAR_BACK, backAlpha, animate);
+            if (back != null) {
+                setKeyButtonViewQuiescentAlpha(back, backAlpha, animate);
+            }
         }
     }
 

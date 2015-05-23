@@ -23,6 +23,7 @@ import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 import android.app.ActivityManagerNative;
 import android.app.StatusBarManager;
+import android.app.admin.DevicePolicyManager;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -33,7 +34,9 @@ import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.VectorDrawable;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PowerManager;
@@ -42,13 +45,22 @@ import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.KeyEvent;
 import android.view.GestureDetector;
 import android.view.inputmethod.InputMethodManager;
+import android.view.accessibility.AccessibilityManager;
+import android.view.accessibility.AccessibilityManager.TouchExplorationStateChangeListener;
 import android.view.*;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.android.internal.util.temasek.ActionConfig;
+import com.android.internal.util.temasek.ActionConstants;
+import com.android.internal.util.temasek.ActionHelper;
+import com.android.internal.util.temasek.ColorHelper;
+import com.android.internal.util.temasek.DeviceUtils;
 import com.android.systemui.R;
 import com.android.systemui.cm.UserContentObserver;
 import com.android.systemui.statusbar.BaseStatusBar;
@@ -59,6 +71,7 @@ import com.android.systemui.statusbar.policy.KeyButtonView;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 public class NavigationBarView extends LinearLayout {
 	
@@ -67,6 +80,23 @@ public class NavigationBarView extends LinearLayout {
 
     // slippery nav bar when everything is disabled, e.g. during setup
     final static boolean SLIPPERY_WHEN_DISABLED = true;
+
+    // Definitions for navbar menu button customization
+    private final static int SHOW_RIGHT_MENU = 0;
+    private final static int SHOW_LEFT_MENU = 1;
+    private final static int SHOW_BOTH_MENU = 2;
+
+    private final static int MENU_VISIBILITY_ALWAYS = 0;
+    private final static int MENU_VISIBILITY_NEVER = 1;
+    private final static int MENU_VISIBILITY_SYSTEM = 2;
+
+    private static final int KEY_MENU_RIGHT = 0;
+    private static final int KEY_MENU_LEFT = 1;
+    private static final int KEY_IME_SWITCHER = 2;
+
+    private int mMenuVisibility;
+    private int mMenuSetting;
+    private boolean mOverrideMenuKeys;
 
     final static String NAVBAR_EDIT_ACTION = "android.intent.action.NAVBAR_EDIT";
 
