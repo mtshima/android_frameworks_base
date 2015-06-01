@@ -1845,12 +1845,7 @@ public class NotificationManagerService extends SystemService {
         @Override
         public boolean matchesCallFilter(Bundle extras) {
             enforceSystemOrSystemUI("INotificationManager.matchesCallFilter");
-            return mZenModeHelper.matchesCallFilter(
-                    UserHandle.getCallingUserHandle(),
-                    extras,
-                    mRankingHelper.findExtractor(ValidateNotificationPeople.class),
-                    MATCHES_CALL_FILTER_CONTACTS_TIMEOUT_MS,
-                    MATCHES_CALL_FILTER_TIMEOUT_AFFINITY);
+            return false;
         }
 
         @Override
@@ -2073,6 +2068,8 @@ public class NotificationManagerService extends SystemService {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
+
+                Process.setThreadPriority(Process.THREAD_PRIORITY_FOREGROUND);
 
                 synchronized (mNotificationList) {
 
