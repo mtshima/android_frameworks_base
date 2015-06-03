@@ -26,6 +26,7 @@ import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.UserInfo;
 import android.gesture.Gesture;
@@ -543,6 +544,10 @@ public class LockPatternUtils {
                     activePasswordQuality = DevicePolicyManager.PASSWORD_QUALITY_GESTURE_WEAK;
                 }
                 break;
+            case DevicePolicyManager.PASSWORD_THIRD_PARTY_UNSECURED:
+                if (isThirdPartyKeyguardEnabled()) {
+                    activePasswordQuality = DevicePolicyManager.PASSWORD_THIRD_PARTY_UNSECURED;
+                }
         }
 
         return activePasswordQuality;
@@ -1047,6 +1052,37 @@ public class LockPatternUtils {
     }
 
     /**
+     * Sets a third party lock screen.
+     * @param component
+     */
+    public void setThirdPartyKeyguard(ComponentName component)
+            throws PackageManager.NameNotFoundException {
+        if (component != null) {
+            // Check that the package this component belongs to has the third party keyguard perm
+            final PackageManager pm = mContext.getPackageManager();
+            PackageInfo pi = pm.getPackageInfo(component.getPackageName(),
+                    PackageManager.GET_PERMISSIONS);
+            boolean hasThirdPartyKeyguardPermission = false;
+            for (String perm : pi.requestedPermissions) {
+                if (Manifest.permission.THIRD_PARTY_KEYGUARD.equals(perm)) {
+                    hasThirdPartyKeyguardPermission = true;
+                    break;
+                }
+            }
+            if (!hasThirdPartyKeyguardPermission) {
+                throw new SecurityException("Package " + component.getPackageName() + " does not" +
+                        "have " + Manifest.permission.THIRD_PARTY_KEYGUARD);
+            }
+        }
+        Settings.Secure.putString(mContentResolver,
+                Settings.Secure.THIRD_PARTY_KEYGUARD_COMPONENT,
+                component != null ? component.flattenToString() : "");
+        setLong(PASSWORD_TYPE_KEY,
+                component != null ? DevicePolicyManager.PASSWORD_THIRD_PARTY_UNSECURED :
+                        DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED);
+    }
+
+    /**
      * Gets whether the device is encrypted.
      *
      * @return Whether the device is encrypted.
@@ -1410,6 +1446,15 @@ public class LockPatternUtils {
         // entire function and a lot of other code can be removed.
         if (DEBUG) Log.d(TAG, "Forcing isBiometricWeakInstalled() to return false to disable it");
         return false;
+    }
+
+    /**
+     * @return Whether a third party keyguard is set
+     */
+    public boolean isThirdPartyKeyguardEnabled() {
+        String component = Settings.Secure.getString(mContentResolver,
+                Settings.Secure.THIRD_PARTY_KEYGUARD_COMPONENT);
+        return !TextUtils.isEmpty(component);
     }
 
     /**
