@@ -4644,6 +4644,12 @@ public final class Settings {
         public static final String PIE_IME_CONTROL = "pie_ime_control";
 
         /**
+         * Disabled Transition animations of the android system
+         * @hide
+         */
+        public static final String DISABLE_TRANSITION_ANIMATIONS = "disable_transition_animations";
+
+        /**
          * Pie trigger sensitivity
          * @hide
          */
