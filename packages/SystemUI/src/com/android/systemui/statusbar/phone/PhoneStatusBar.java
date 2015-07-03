@@ -190,6 +190,7 @@ import com.android.systemui.statusbar.policy.KeyButtonView;
 import com.android.systemui.statusbar.policy.KeyguardMonitor;
 import com.android.systemui.statusbar.policy.KeyguardUserSwitcher;
 import com.android.systemui.statusbar.policy.LocationControllerImpl;
+import com.android.systemui.statusbar.policy.NetworkController.NetworkSignalChangedCallback;
 import com.android.systemui.statusbar.policy.NetworkControllerImpl;
 import com.android.systemui.statusbar.policy.NextAlarmController;
 import com.android.systemui.statusbar.policy.PreviewInflater;
@@ -386,6 +387,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private boolean mShowStatusBarCarrier;
 
     private boolean mQSCSwitch;
+    private TextView mWifiSsidLabel;
+    private boolean mShowWifiSsidLabel;
 
     // position
     int[] mPositionTmp = new int[2];
@@ -511,6 +514,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.NOTIFICATION_DRAWER_CLEAR_ALL_ICON_COLOR),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.Global.WIFI_STATUS_BAR_SSID),
+                    false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.ENABLE_TASK_MANAGER),
                     false, this, UserHandle.USER_ALL);
@@ -661,6 +667,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mShowStatusBarCarrier = Settings.System.getIntForUser(resolver,
                     Settings.System.STATUS_BAR_CARRIER, 0, mCurrentUserId) == 1;
             showStatusBarCarrierLabel(mShowStatusBarCarrier);
+
+            mShowWifiSsidLabel = Settings.Global.getInt(resolver,
+                Settings.Global.WIFI_STATUS_BAR_SSID, 0) == 1;
 
             mShowTaskManager = Settings.System.getIntForUser(resolver,
                     Settings.System.ENABLE_TASK_MANAGER, 0, UserHandle.USER_CURRENT) == 1;
@@ -1297,6 +1306,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             });
         }
 
+        mWifiSsidLabel = (TextView)mStatusBarView.findViewById(R.id.status_bar_wifi_label);
+        if (mWifiSsidLabel != null) {
+            mNetworkController.addNetworkSignalChangedCallback(mWifiCallback);
+        }
+
         mCarrierLabel = (TextView)mStatusBarWindowContent.findViewById(R.id.carrier_label);
         mShowCarrierInPanel = (mCarrierLabel != null);
         if (DEBUG) Log.v(TAG, "carrierlabel=" + mCarrierLabel + " show=" + mShowCarrierInPanel);
@@ -1317,6 +1331,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 }
             });
         }
+        updateClockSize();
 
         mKeyguardBottomArea.setPhoneStatusBar(this);
         if (mAccessibilityController == null) {
@@ -1409,6 +1424,40 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         UpdateNotifDrawerClearAllIconColor();
         return mStatusBarView;
     }
+
+    private final NetworkSignalChangedCallback mWifiCallback = new NetworkSignalChangedCallback() {
+        @Override
+        public void onWifiSignalChanged(boolean enabled, boolean connected, int wifiSignalIconId,
+                boolean activityIn, boolean activityOut,
+                String wifiSignalContentDescriptionId, String description) {
+            String ssid = mNetworkController.getConnectedWifiSsid();
+            showWifiSsidLabel(connected ? ssid : "");
+        }
+
+        @Override
+        public void onMobileDataSignalChanged(boolean enabled,
+                int mobileSignalIconId,
+                String mobileSignalContentDescriptionId, int dataTypeIconId,
+                boolean activityIn, boolean activityOut,
+                String dataTypeContentDescriptionId, String description,
+                boolean isDataTypeIconWide) {
+            // noop
+        }
+
+        public void onNoSimVisibleChanged(boolean noSims) {
+            // noop
+        }
+
+        @Override
+        public void onAirplaneModeChanged(boolean enabled) {
+            // noop
+        }
+
+        @Override
+        public void onMobileDataEnabled(boolean enabled) {
+            // noop
+        }
+    };
 
     private void clearAllNotifications() {
 
@@ -3990,6 +4039,29 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         }
     }
 
+    public void showWifiSsidLabel(String ssid) {
+        if (mStatusBarView == null || mContext == null
+            || mWifiSsidLabel == null || mNetworkController == null) {
+            return;
+        }
+        mShowWifiSsidLabel = Settings.Global.getInt(mContext.getContentResolver(),
+            Settings.Global.WIFI_STATUS_BAR_SSID, 0) == 1;
+        if (ssid != null) {
+            ssid = ssid.replace("\"", "");
+        }
+        boolean doShow = mShowWifiSsidLabel && !TextUtils.isEmpty(ssid);
+        if (doShow) {
+            int mCarrierColor = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.STATUS_BAR_CARRIER_COLOR, 0xffffffff);
+            mWifiSsidLabel.setText(ssid);
+            mWifiSsidLabel.setTextColor(mCarrierColor);
+            mWifiSsidLabel.setVisibility(View.VISIBLE);
+        } else {
+            mWifiSsidLabel.setText("");
+            mWifiSsidLabel.setVisibility(View.GONE);
+        }
+    }
+
     private void resetUserExpandedStates() {
         ArrayList<Entry> activeNotifications = mNotificationData.getActiveNotifications();
         final int notificationCount = activeNotifications.size();
@@ -4299,7 +4371,16 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         if (clock != null) {
             FontSizeUtils.updateFontSize(clock, R.dimen.status_bar_clock_size);
         }
+        TextView carrier = (TextView) mStatusBarView.findViewById(R.id.status_bar_carrier_label);
+        if (carrier != null) {
+            FontSizeUtils.updateFontSize(carrier, R.dimen.status_bar_clock_size);
+        }
+        TextView wifi = (TextView) mStatusBarView.findViewById(R.id.status_bar_wifi_label);
+        if (wifi != null) {
+            FontSizeUtils.updateFontSize(wifi, R.dimen.status_bar_clock_size);
+        }
     }
+
     protected void loadDimens() {
         final Resources res = mContext.getResources();
 
