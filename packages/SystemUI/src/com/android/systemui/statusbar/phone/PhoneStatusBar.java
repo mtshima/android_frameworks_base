@@ -4371,10 +4371,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         if (clock != null) {
             FontSizeUtils.updateFontSize(clock, R.dimen.status_bar_clock_size);
         }
-        TextView carrier = (TextView) mStatusBarView.findViewById(R.id.status_bar_carrier_label);
-        if (carrier != null) {
-            FontSizeUtils.updateFontSize(carrier, R.dimen.status_bar_clock_size);
-        }
         TextView wifi = (TextView) mStatusBarView.findViewById(R.id.status_bar_wifi_label);
         if (wifi != null) {
             FontSizeUtils.updateFontSize(wifi, R.dimen.status_bar_clock_size);
