@@ -31,9 +31,6 @@
     <!-- Screen record notification error title -->
     <string name="screenrecord_notif_error">Unable to record screen</string>
 
-    <!-- no interuptions except alarms -->
-    <string name="zen_no_interruptions_but_alarm">No interruptions. Except alarms.</string>
-
     <!-- Battery status in pie controls -->
     <string name="pie_battery_status_charging">Charging (<xliff:g id="percent">%d</xliff:g>%%)</string>
     <string name="pie_battery_status_full">Charged</string>
@@ -97,5 +94,4 @@
 
     <!-- Title shown in recents popup for showing app launch in floating mode -->
     <string name="recent_float_mode_title">Floating mode</string>
-
 </resources>
