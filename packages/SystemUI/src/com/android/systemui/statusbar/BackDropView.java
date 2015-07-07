@@ -150,9 +150,6 @@ public class BackDropView extends FrameLayout implements Palette.PaletteAsyncLis
             }
         };
         mMediaMonitor.setListening(true);
-        if (mScreenOn) {
-            mHandler.postDelayed(mResumeVisualizerIfPlayingRunnable, 200);
-        }
     }
 
     @Override
