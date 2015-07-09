@@ -2527,8 +2527,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             }
         }
 
-        WallpaperManager wm = (WallpaperManager) mContext.getSystemService(
-                Context.WALLPAPER_SERVICE);
         boolean keyguardVisible = (mState != StatusBarState.SHADE);
         boolean visualizerVisible = mVisualizerEnabled && keyguardVisible
                 && (mMediaController != null);
@@ -2819,6 +2817,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
     public void setQsExpanded(boolean expanded) {
         mStatusBarWindowManager.setQsExpanded(expanded);
+        if (mVisualizerEnabled && mState != StatusBarState.SHADE) {
+            mBackdrop.setQsExpanded(expanded);
+        }
     }
 
     public boolean isGoingToNotificationShade() {
