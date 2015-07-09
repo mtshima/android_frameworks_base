@@ -176,11 +176,6 @@ static jobject nativeGetEnrollments(JNIEnv* env) {
     return jFingerprintObjArray;
 }
 
-static jint nativeGetNumEnrollmentSteps(JNIEnv* env) {
-    ALOG(LOG_VERBOSE, LOG_TAG, "nativeGetNumEnrollMents()\n");
-    return reinterpret_cast<jint>(gContext.device->get_num_enrollment_steps(gContext.device));
-}
-
 static jint nativeOpenHal(JNIEnv* env, jobject clazz) {
     ALOG(LOG_VERBOSE, LOG_TAG, "nativeOpenHal()\n");
     int err;
@@ -244,8 +239,7 @@ static const JNINativeMethod g_methods[] = {
     { "nativeOpenHal", "()I", (void*)nativeOpenHal },
     { "nativeCloseHal", "()I", (void*)nativeCloseHal },
     { "nativeInit", "(Lcom/android/server/fingerprint/FingerprintService;)V", (void*)nativeInit },
-    { "nativeGetEnrollments", "()[Landroid/hardware/fingerprint/Fingerprint;", (void*)nativeGetEnrollments },
-    { "nativeGetNumEnrollmentSteps", "()I", (void*)nativeGetNumEnrollmentSteps }
+    { "nativeGetEnrollments", "()[Landroid/hardware/fingerprint/Fingerprint;", (void*)nativeGetEnrollments }
 };
 
 int register_android_server_fingerprint_FingerprintService(JNIEnv* env) {
