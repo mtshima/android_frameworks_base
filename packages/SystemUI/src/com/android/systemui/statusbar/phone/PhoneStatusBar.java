@@ -321,7 +321,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private DozeServiceHost mDozeServiceHost;
     private boolean mScreenOnComingFromTouch;
     private PointF mScreenOnTouchLocation;
-    private boolean mQSCSwitch;
 
     int mPixelFormat;
     Object mQueueLock = new Object();
@@ -1496,7 +1495,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         startGlyphRasterizeHack();
         UpdateNotifDrawerClearAllIconColor();
         setKeyguardTextAndIconColors();
-        updateBatteryLevelTextColor();
         return mStatusBarView;
     }
 
