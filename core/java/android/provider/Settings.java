@@ -4725,6 +4725,18 @@ public final class Settings {
          */
         public static final String NONE_IS_SILENT = "none_is_silent";
 
+         * Launch headsup in floating window or not
+         *
+         * @hide
+         */
+        public static final String HEADS_UP_FLOATING = "heads_up_floating";
+
+        /**
+         * Launch gesture anywhere in floating window or not
+         * @hide
+         */
+        public static final String GESTURE_ANYWHERE_FLOATING = "gesture_anywhere_floating";
+
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
