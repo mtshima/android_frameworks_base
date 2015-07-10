@@ -892,6 +892,9 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         applyAlpha(mDateCollapsed, values.dateCollapsedAlpha);
         applyAlpha(mDateExpanded, values.dateExpandedAlpha);
         applyAlpha(mBatteryLevel, values.batteryLevelAlpha);
+        if (mDockBatteryLevel != null) {
+            applyAlpha(mDockBatteryLevel, values.batteryLevelAlpha);
+        }
         applyAlpha(mTaskManagerButton, values.settingsAlpha);
         applyAlpha(mHeadsUpButton, values.headsUpAlpha);
         if (mDockBatteryLevel != null) {
