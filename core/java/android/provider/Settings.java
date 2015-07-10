@@ -4725,6 +4725,7 @@ public final class Settings {
          */
         public static final String NONE_IS_SILENT = "none_is_silent";
 
+        /*
          * Launch headsup in floating window or not
          *
          * @hide
