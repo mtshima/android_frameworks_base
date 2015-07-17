@@ -154,6 +154,9 @@
     <!-- Fingerprint -->
     <uses-permission android:name="android.permission.ACCESS_FINGERPRINT_SERVICE" />
 
+    <!-- CM Settings -->
+    <uses-permission android:name="cyanogenmod.permission.WRITE_SETTINGS" />
+
     <application
         android:name=".SystemUIApplication"
         android:persistent="true"
