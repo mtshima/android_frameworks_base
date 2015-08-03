@@ -46,7 +46,6 @@ public class Rfc822Tokenizer implements MultiAutoCompleteTextView.Tokenizer {
         StringBuilder name = new StringBuilder();
         StringBuilder address = new StringBuilder();
         StringBuilder comment = new StringBuilder();
-        StringBuilder buffer = new StringBuilder();
 
         int i = 0;
         int cursor = text.length();
@@ -130,7 +129,6 @@ public class Rfc822Tokenizer implements MultiAutoCompleteTextView.Tokenizer {
                     c = text.charAt(i);
 
                     if (c == '>') {
-                        buffer.append(c);
                         i++;
                         break;
                     } else {
@@ -138,21 +136,11 @@ public class Rfc822Tokenizer implements MultiAutoCompleteTextView.Tokenizer {
                         i++;
                     }
                 }
-            } else if (c == '>' && address.length() > 0){
-                // Additional end bracket found, append everything starting from the previous end bracket onto address
-                address.append(buffer.toString());
-
-                // Reset buffer and name fields
-                buffer.setLength(0);
-                name.setLength(0);
-                i++;
             } else if (c == ' ') {
                 name.append('\0');
-                buffer.append(c);
                 i++;
             } else {
                 name.append(c);
-                buffer.append(c);
                 i++;
             }
         }
