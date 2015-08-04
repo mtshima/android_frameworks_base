@@ -197,7 +197,18 @@ public class DateTimeView extends TextView {
     }
 
     private DateFormat getDateFormat() {
-        return DateFormat.getDateInstance(DateFormat.SHORT);
+        String format = Settings.System.getString(getContext().getContentResolver(),
+                Settings.System.DATE_FORMAT);
+        if (format == null || "".equals(format)) {
+            return DateFormat.getDateInstance(DateFormat.SHORT);
+        } else {
+            try {
+                return new SimpleDateFormat(format);
+            } catch (IllegalArgumentException e) {
+                // If we tried to use a bad format string, fall back to a default.
+                return DateFormat.getDateInstance(DateFormat.SHORT);
+            }
+        }
     }
 
     void clearFormatAndUpdate() {
