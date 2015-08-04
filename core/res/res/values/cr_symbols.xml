@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <!-- Custom styles for dialog themes -->
+  <java-symbol type="style" name="Theme.Material.Trds.Dialog" />
+  <java-symbol type="style" name="Theme.Material.Trds.Dialog.Alert" />
+  <java-symbol type="style" name="Theme.DeviceDefault.Resolver.Dark" />
 
   <!-- Hardware keys on/off option -->
   <java-symbol type="bool" name="config_hwKeysPref" />
@@ -96,6 +100,10 @@
 
   <!-- Ambient Display-->
   <java-symbol type="bool" name="config_dozeUseAccelerometer" />
+  
+  <!-- UI theme mode -->
+  <java-symbol type="integer" name="config_uiThemeMode" />
+  <java-symbol type="string" name="theme_auto_switch_mode_error" />
 
    <!-- global actions (zen mode buttons) -->
   <java-symbol type="id" name="option4" />
