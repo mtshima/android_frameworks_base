@@ -1232,6 +1232,26 @@ public class LockPatternUtils {
         return new String(res);
     }
 
+    /**
+     * Check whether two patterns match
+     */
+    public static boolean patternMatches(List<LockPatternView.Cell> p1,
+                                         List<LockPatternView.Cell> p2) {
+        if (p1 == null || p2 == null) {
+            return false;
+        }
+        if (p1.size() != p2.size()) {
+            return false;
+        }
+        byte size = (byte) p1.size();
+        for(int i = 0; i < size; i++) {
+            if (!p1.get(i).equals(p2.get(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /*
      * Generate an SHA-1 hash for the pattern. Not the most secure, but it is
      * at least a second level of protection. First level is that the file

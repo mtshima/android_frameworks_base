@@ -4041,6 +4041,66 @@ public final class Settings {
          */
         public static final String LOCK_SCREEN_WEATHER_ICON_COLOR = "lock_screen_weather_icon_color";
 
+         /**
+         * Colorize the media notifications background
+         * 0: never
+         * 1: if the notification doesn`t include an own color
+         * 2: always
+         * default: 0
+         * @hide
+         */
+        public static final String NOTIFICATION_MEDIA_BG_MODE = "notification_media_bg_mode";
+
+        /**
+         * Colorize the notifications app icon background
+         * 0: never
+         * 1: if the notification doesn`t include an own color
+         * 2: always
+         * default: 0
+         * @hide
+         */
+        public static final String NOTIFICATION_APP_ICON_BG_MODE = "notification_app_icon_bg_mode";
+
+        /**
+         * Colorize the notifications app icon
+         * 0: never
+         * 1: if the icon is an greyscale icon
+         * 2: always
+         * default: 0
+         * @hide
+         */
+        public static final String NOTIFICATION_APP_ICON_COLOR_MODE = "notification_app_icon_color_mode";
+
+        /**
+         * Color of the notifications background
+         * @hide
+         */
+        public static final String NOTIFICATION_BG_COLOR = "notification_bg_color";
+
+        /**
+         * Color of the notifications background on longpress
+         * @hide
+         */
+        public static final String NOTIFICATION_GUTS_BG_COLOR = "notification_bg_guts_color";
+
+        /**
+         * Color of the notifications icon background
+         * @hide
+         */
+        public static final String NOTIFICATION_APP_ICON_BG_COLOR = "notification_app_icon_bg_color";
+
+        /**
+         * Color of the notification text
+         * @hide
+         */
+        public static final String NOTIFICATION_TEXT_COLOR = "notification_text_color";
+
+        /**
+         * Color of notification icon
+         * @hide
+         */
+        public static final String NOTIFICATION_ICON_COLOR = "notification_icon_color";
+
         /**
          * Override and forcefully disable the fullscreen keyboard
          * @hide
@@ -4757,6 +4817,18 @@ public final class Settings {
          * @hide
          */
         public static final String NOTIFICATION_DRAWER_CLEAR_ALL_ICON_COLOR = "nd_clear_all_icon_color";
+
+        /**
+         * Color of the clear all button background in the recent apps panel
+         * @hide
+         */
+        public static final String RECENT_APPS_CLEAR_ALL_BG_COLOR = "recent_apps_clear_all_bg_color";
+
+        /**
+         * Color of the clear all button icon in the recent apps panel
+         * @hide
+         */
+        public static final String RECENT_APPS_CLEAR_ALL_ICON_COLOR = "recent_apps_clear_all_icon_color";
 
         /**
          * Enable built in CAF task manager

@@ -194,6 +194,16 @@ public class LockPatternView extends View {
             }
         }
 
+        @Override
+        public boolean equals(Object o) {
+            if (o instanceof Cell) {
+                final Cell other = (Cell) o;
+                return other.getColumn() == getColumn()
+                        && other.getRow() == getRow();
+            }
+            return false;
+        }
+
         public String toString() {
             return "(row=" + row + ",clmn=" + column + ")";
         }
