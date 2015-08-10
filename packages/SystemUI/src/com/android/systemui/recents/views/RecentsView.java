@@ -400,11 +400,11 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
             } else if (mSearchBar == null && enableMemDisplay) {
             	params.topMargin = mContext.getResources().
                     getDimensionPixelSize(com.android.internal.R.dimen.status_bar_height)
-                        + 120;
+                        + 125;
             } else if (mSearchBar != null && enableMemDisplay) {
             	params.topMargin = mContext.getResources().
                     getDimensionPixelSize(com.android.internal.R.dimen.status_bar_height)
-                        + searchBarSpaceBounds.height() + 120;
+                        + searchBarSpaceBounds.height() + 125;
             } else {
                 params.topMargin = mContext.getResources().
                     getDimensionPixelSize(com.android.internal.R.dimen.status_bar_height)
