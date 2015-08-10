@@ -3739,6 +3739,9 @@ public final class ActivityManagerService extends ActivityManagerNative
             callingUid = task.mCallingUid;
             callingPackage = task.mCallingPackage;
             intent = task.intent;
+            if (task.origActivity != null) {
+                intent.setComponent(task.origActivity);
+            }
             intent.addFlags(Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY);
             userId = task.userId;
         }
@@ -8552,6 +8555,10 @@ public final class ActivityManagerService extends ActivityManagerNative
             SparseArray<ProcessRecord> uids = pmap.valueAt(i);
             for (int j = 0; j < uids.size(); j++) {
                 ProcessRecord proc = uids.valueAt(j);
+                if (proc.thread == null) {
+                    // Don't kill process if it is not attached.
+                    continue;
+                }
                 if (proc.userId != tr.userId) {
                     // Don't kill process for a different user.
                     continue;
