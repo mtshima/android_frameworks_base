@@ -331,8 +331,8 @@
     <string name="dynamic_qs_tile_su_label">Root access</string>
     <string name="dynamic_qs_tile_adb_label" translatable="false">ADB</string>
 
-   <!-- Fingerprint -->
-   <string name="fingerprint_try_again_hint">Please scan again</string>
+    <!-- Fingerprint -->
+    <string name="fingerprint_try_again_hint">Please scan again</string>
 
     <!-- Interruption level: None. [CHAR LIMIT=20] -->
     <string name="interruption_level_silent">Silent</string>
@@ -345,4 +345,9 @@
 
    <!-- Play queue -->
    <string name="play_queue_extention">Play Queue Extension</string>
+
+    <!-- Net service warning -->
+    <string name="title_emerg_warn">WARNING: Emergency calls only.</string>
+    <string name="title_no_srv_warn">WARNING: Out of service.</string>
+    <string name="text_no_srv_warn">No calls(not even emergency).</string>
 </resources>
