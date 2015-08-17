@@ -349,7 +349,7 @@
     <!-- Net service warning -->
     <string name="title_emerg_warn">WARNING: Emergency calls only.</string>
     <string name="title_no_srv_warn">WARNING: Out of service.</string>
-    <string name="text_no_srv_warn">WARNING: No calls (not even emergency).</string>
+    <string name="text_no_srv_warn">No calls(not even emergency).</string>
 
     <!-- Empty view text for CustomQSTile -->
     <string name="quick_settings_custom_qs_detail_empty_text">No items found</string>

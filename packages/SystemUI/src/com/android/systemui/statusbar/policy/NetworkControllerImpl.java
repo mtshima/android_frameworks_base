@@ -1445,8 +1445,7 @@ public class NetworkControllerImpl extends BroadcastReceiver
                             new Notification.Builder(mContext)
                                     .setSmallIcon(id)
                                     .setVibrate(new long[]{100, 300, 100, 300})
-                                    .setLights(Color.RED, 300, 1000)
-                                    .setOngoing(true);
+                                    .setLights(Color.RED, 300, 1000);
 
                     Intent resultIntent = new Intent(Intent.ACTION_MAIN);
                     resultIntent.setClassName("com.android.phone",
