@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2007 The Android Open Source Project
+ * Copyright (C) 2015 The CyanogenMod Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -199,6 +200,9 @@ public class NotificationManagerService extends SystemService {
     /** notification_enqueue status value for an ignored notification. */
     private static final int EVENTLOG_ENQUEUE_STATUS_IGNORED = 2;
 
+    /** notification light maximum brightness value to use. */
+    private static final int LIGHT_BRIGHTNESS_MAXIMUM = 255;
+
     private IActivityManager mAm;
     AudioManager mAudioManager;
     StatusBarManagerInternal mStatusBar;
@@ -219,6 +223,8 @@ public class NotificationManagerService extends SystemService {
 
     private boolean mScreenOnEnabled = false;
     private boolean mScreenOnDefault = false;
+    private boolean mBrightnessNotificationLed;
+    private int mBrightnessLevelNotificationLed = LIGHT_BRIGHTNESS_MAXIMUM;
 
     private long[] mFallbackVibrationPattern;
     private boolean mUseAttentionLight;
@@ -893,6 +899,11 @@ public class NotificationManagerService extends SystemService {
                     this, UserHandle.USER_ALL);
             resolver.registerContentObserver(MUTE_ANNOYING_NOTIFICATIONS_THRESHOLD_URI,
                     false, this, UserHandle.USER_ALL);
+            if (mBrightnessNotificationLed) {
+                resolver.registerContentObserver(Settings.System.getUriFor(
+                        Settings.System.NOTIFICATION_LIGHT_BRIGHTNESS_LEVEL),
+                        false, this, UserHandle.USER_ALL);
+            }
             update(null);
         }
 
@@ -942,6 +953,13 @@ public class NotificationManagerService extends SystemService {
             mScreenOnEnabled = (Settings.System.getIntForUser(resolver,
                 Settings.System.NOTIFICATION_LIGHT_SCREEN_ON,
                 mScreenOnDefault ? 1 : 0, UserHandle.USER_CURRENT) != 0);
+
+            // Notification LED brightness
+            if (mBrightnessNotificationLed) {
+                mBrightnessLevelNotificationLed = Settings.System.getIntForUser(resolver,
+                    Settings.System.NOTIFICATION_LIGHT_BRIGHTNESS_LEVEL,
+                    LIGHT_BRIGHTNESS_MAXIMUM, UserHandle.USER_CURRENT);
+            }
 
             updateNotificationPulse();
 
@@ -1068,6 +1086,9 @@ public class NotificationManagerService extends SystemService {
                 R.array.config_notificationFallbackVibePattern,
                 VIBRATE_PATTERN_MAXLEN,
                 DEFAULT_VIBRATE_PATTERN);
+
+        mBrightnessNotificationLed = resources.getBoolean(
+                com.android.internal.R.bool.config_brightnessNotificationLed);
 
         mUseAttentionLight = resources.getBoolean(R.bool.config_useAttentionLight);
 
@@ -3076,6 +3097,9 @@ public class NotificationManagerService extends SystemService {
                 ledOnMS = ledno.ledOnMS;
                 ledOffMS = ledno.ledOffMS;
             }
+
+            // update the LEDs modes variables
+            mNotificationLight.setModes(mBrightnessLevelNotificationLed);
 
             if (mNotificationPulseEnabled) {
                 // pulse repeatedly
