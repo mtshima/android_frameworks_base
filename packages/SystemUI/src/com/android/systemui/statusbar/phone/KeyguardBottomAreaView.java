@@ -458,7 +458,8 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
 
             // We need to delay starting the activity because ResolverActivity finishes itself if
             // launched behind lockscreen.
-            mActivityStarter.startActivity(intent, false /* dismissShade */);
+            mActivityStarter.startActivity(intent, false /* dismissShade */,
+                    true /* dismissKeyguard */);
         }
     }
 
@@ -473,12 +474,14 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
                     }
                 });
             } else {
-                mActivityStarter.startActivity(PHONE_INTENT, false /* dismissShade */);
+                mActivityStarter.startActivity(PHONE_INTENT, false /* dismissShade */,
+                        true /* dismissKeyguard */);
             }
         } else {
                 Intent intent = mShortcutHelper.getIntent(
                         LockscreenShortcutsHelper.Shortcuts.LEFT_SHORTCUT);
-                mActivityStarter.startActivity(intent, false /* dismissShade */);
+                mActivityStarter.startActivity(intent, false /* dismissShade */,
+                        true /* dismissKeyguard */);
         }
     }
 
