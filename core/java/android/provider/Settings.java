@@ -4836,13 +4836,6 @@ public final class Settings {
         public static final String GESTURE_ANYWHERE_FLOATING = "gesture_anywhere_floating";
 
         /**
-         * Whether to attach a queue to media notifications.
-         * Boolean setting.
-         * @hide
-         */
-        public static final String NOTIFICATION_PLAY_QUEUE = "notification_play_queue";
-
-        /**
          * Switch for headset icon
          * @hide
          */
@@ -4941,7 +4934,6 @@ public final class Settings {
             ALLOW_LIGHTS,
             NONE_IS_SILENT,
             ALLOW_LIGHTS,
-            NOTIFICATION_PLAY_QUEUE,
             NOTIFICATION_LIGHT_SCREEN_ON,
             NOTIFICATION_LIGHT_BRIGHTNESS_LEVEL
         };
