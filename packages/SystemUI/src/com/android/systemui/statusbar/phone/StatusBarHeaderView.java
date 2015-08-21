@@ -668,7 +668,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 
     private void startBatteryActivity() {
         mActivityStarter.startActivity(new Intent(Intent.ACTION_POWER_USAGE_SUMMARY),
-                true /* dismissShade */, true /* dismissKeyguard */, true /* dismissKeyguard */);
+                true /* dismissShade */, true /* dismissKeyguard */);
     }
 
     private void startBatteryLongClickActivity() {
@@ -685,7 +685,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 
     private void startClockLongClickActivity() {
         mActivityStarter.startActivity(new Intent(AlarmClock.ACTION_SET_ALARM),
-                true /* dismissShade */);
+                true /* dismissShade */, true /* dismissGuard */);
     }
 
     private void startDateActivity() {
@@ -699,7 +699,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
     private void startDateLongClickActivity() {
         Intent intent = new Intent(Intent.ACTION_INSERT);
             intent.setData(Events.CONTENT_URI);
-        mActivityStarter.startActivity(intent, true /* dismissShade */);
+        mActivityStarter.startActivity(intent, true /* dismissShade */, true /* dismissGuard */);
     }
 
     private void startForecastActivity() {
@@ -712,7 +712,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.setClassName("com.cyanogenmod.lockclock",
             "com.cyanogenmod.lockclock.preference.Preferences");
-        mActivityStarter.startActivity(intent, true /* dismissShade */);
+        mActivityStarter.startActivity(intent, true /* dismissShade */, false /* dismissGuard */);
     }
 
     private void startHeadsUpActivity() {
