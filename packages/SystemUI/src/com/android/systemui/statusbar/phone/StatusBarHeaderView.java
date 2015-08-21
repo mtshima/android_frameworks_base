@@ -663,19 +663,19 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         Intent intent = new Intent(Intent.ACTION_MAIN);
 	intent.setClassName("com.android.settings",
             "com.android.settings.Settings$QSTilesSettingsActivity");
-        mActivityStarter.startActivity(intent, true /* dismissShade */);
+        mActivityStarter.startActivity(intent, true /* dismissShade */, true /* dismissKeyguard */);
     }
 
     private void startBatteryActivity() {
         mActivityStarter.startActivity(new Intent(Intent.ACTION_POWER_USAGE_SUMMARY),
-                true /* dismissShade */, true /* dismissKeyguard */);
+                true /* dismissShade */, true /* dismissKeyguard */, true /* dismissKeyguard */);
     }
 
     private void startBatteryLongClickActivity() {
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.setClassName("com.android.settings",
             "com.android.settings.Settings$BatterySaverSettingsActivity");
-        mActivityStarter.startActivity(intent, true /* dismissShade */);
+        mActivityStarter.startActivity(intent, true /* dismissShade */. true /* dismissKeyguard */);
     }
 
     private void startClockActivity() {
