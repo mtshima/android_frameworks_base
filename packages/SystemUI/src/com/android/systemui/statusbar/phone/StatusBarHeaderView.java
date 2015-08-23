@@ -289,7 +289,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
     private void updateBackgroundColor() {
         ContentResolver resolver = mContext.getContentResolver();
         int backgroundColor = Settings.System.getInt(resolver,
-                Settings.System.STATUS_BAR_EXPANDED_HEADER_BG_COLOR, 0xff384248);
+                Settings.System.STATUS_BAR_EXPANDED_HEADER_BG_COLOR, 0xee263238);
         getBackground().setColorFilter(backgroundColor, Mode.MULTIPLY);
     }
     
