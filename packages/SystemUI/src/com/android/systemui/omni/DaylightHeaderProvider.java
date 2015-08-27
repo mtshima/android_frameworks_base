@@ -49,7 +49,7 @@ public class DaylightHeaderProvider implements
     // Daily calendar periods
     private static final int TIME_SUNRISE = 6;
     private static final int DRAWABLE_SUNRISE = R.drawable.notifhead_sunrise;
-    private static final int TIME_MORNING = 9;
+    private static final int TIME_MORNING = 8;
     private static final int DRAWABLE_MORNING = R.drawable.notifhead_morning;
     private static final int TIME_NOON = 11;
     private static final int DRAWABLE_NOON = R.drawable.notifhead_noon;
@@ -57,7 +57,7 @@ public class DaylightHeaderProvider implements
     private static final int DRAWABLE_AFTERNOON = R.drawable.notifhead_afternoon;
     private static final int TIME_SUNSET = 19;
     private static final int DRAWABLE_SUNSET = R.drawable.notifhead_sunset;
-    private static final int TIME_NIGHT = 21;
+    private static final int TIME_NIGHT = 20;
     private static final int DRAWABLE_NIGHT = R.drawable.notifhead_night;
 
     // Special events
