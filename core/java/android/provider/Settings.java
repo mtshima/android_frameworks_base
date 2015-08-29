@@ -4132,6 +4132,13 @@ public final class Settings {
         public static final String TOAST_ANIMATION = "toast_animation";
 
         /**
+         * Toast icon
+         *
+         * @hide
+         */
+        public static final String TOAST_ICON = "toast_icon";
+
+        /**
          * show the membar in recents
          *  @hide
          */
@@ -7520,6 +7527,13 @@ public final class Settings {
          * @hide
          */
         public static final String THIRD_PARTY_KEYGUARD_COMPONENT = "third_party_keyguard";
+
+        /**
+         * Whether to enable/disable device policy override.
+         * @hide
+         */
+        public static final String ENABLE_DEVICE_POLICY_OVERRIDE
+                = "enable_device_policy_override";
 
         /**
          * This are the settings to be backed up.
