@@ -3080,13 +3080,6 @@ public final class Settings {
          */
         public static final String NOTIFICATION_LIGHT_SCREEN_ON =
                 "notification_light_screen_on_enable";
-        
-        /**
-         * Contains the notifications light maximum brightness to use.
-         * @hide
-         */
-        public static final String NOTIFICATION_LIGHT_BRIGHTNESS_LEVEL =
-                "notification_light_brightness_level";
 
         /**
          * Whether the notification LED should repeatedly flash when a notification is
@@ -4953,8 +4946,7 @@ public final class Settings {
             ALLOW_LIGHTS,
             NONE_IS_SILENT,
             NOTIFICATION_PLAY_QUEUE,
-            NOTIFICATION_LIGHT_SCREEN_ON,
-            NOTIFICATION_LIGHT_BRIGHTNESS_LEVEL
+            NOTIFICATION_LIGHT_SCREEN_ON
         };
 
         /**
