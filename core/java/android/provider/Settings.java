@@ -3815,6 +3815,12 @@ public final class Settings {
         public static final String STATUS_BAR_WEATHER_SIZE = "status_bar_weather_size";
 
         /**
+         * Statusbar weather font style setting
+         * @hide
+         */
+        public static final String STATUS_BAR_WEATHER_FONT_STYLE = "status_bar_weather_font_style";
+
+        /**
          * Disable FC Notifications
          * @hide
          */
@@ -5954,10 +5960,10 @@ public final class Settings {
         public static final String LOCKSCREEN_TARGETS = "lockscreen_target_actions";
 
         /**
-         * Long press on lock screen lock icon to sleep
+         * Long press on lock screen lock icon to launch torch
          * @hide
          */
-        public static final String LONG_PRESS_LOCK_ICON_TO_SLEEP = "long_press_lock_icon_to_sleep";
+        public static final String LONG_PRESS_LOCK_ICON_TORCH = "long_press_lock_icon_torch";
 
         /**
          * Comma-separated list of location providers that activities may access. Do not rely on
@@ -6142,6 +6148,12 @@ public final class Settings {
          */
         public static final String TRUST_AGENTS_INITIALIZED =
                 "trust_agents_initialized";
+
+        /**
+         * Chamber on / off (custom setting shortcuts)
+         * @hide
+         */
+        public static final String CHAMBER_OF_SECRETS = "chamber_of_secrets";
 
         /**
          * The Logging ID (a unique 64-bit value) as a hex string.
