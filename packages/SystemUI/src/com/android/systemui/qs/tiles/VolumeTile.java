@@ -17,7 +17,7 @@
 package com.android.systemui.qs.tiles;
 
 import android.content.Context;
-import android.content.Intent; 
+import android.content.Intent;
 import android.media.AudioManager;
 import android.provider.Settings;
 
@@ -31,7 +31,7 @@ public class VolumeTile extends QSTile<QSTile.BooleanState> {
     public VolumeTile(Host host) {
         super(host);
     }
-    
+
     @Override
     protected void handleClick() {
         AudioManager am = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
@@ -42,21 +42,21 @@ public class VolumeTile extends QSTile<QSTile.BooleanState> {
     protected void handleLongClick() {
         mHost.startSettingsActivity(SOUND_SETTINGS);
     }
-    
+
     @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
         state.visible = true;
         state.label = mContext.getString(R.string.quick_settings_volume_panel_label);
-        state.icon = ResourceIcon.get(R.drawable.ic_qs_volume_panel); // TODO needs own icon, edit android:pathData
+        state.icon = ResourceIcon.get(R.drawable.ic_qs_volume_panel); // TODO needs own icon
     }
-    
+
     @Override
     protected BooleanState newTileState() {
         return new BooleanState();
     }
-    
+
     @Override
     public void setListening(boolean listening) {
-
+        // Do nothing
     }
 }

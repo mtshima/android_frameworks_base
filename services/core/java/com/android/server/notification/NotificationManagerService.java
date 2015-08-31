@@ -949,6 +949,7 @@ public class NotificationManagerService extends SystemService {
                        Settings.System.MUTE_ANNOYING_NOTIFICATIONS_THRESHOLD, 0,
                        UserHandle.USER_CURRENT_OR_SELF);
             }
+
             // Notification LED brightness
             if (mAdjustableNotificationLedBrightness) {
                 mNotificationLedBrightnessLevel = Settings.System.getIntForUser(resolver,
