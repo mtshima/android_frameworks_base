@@ -2046,7 +2046,9 @@ public class NotificationManagerService extends SystemService {
                     }
 
                     int index = indexOfNotificationLocked(n.getKey());
-                    if (isNotificationSpam(notification, pkg)) {
+
+                    // Only check for spam if this is a new notification
+                    if (old == null && isNotificationSpam(notification, pkg)) {
                         mArchive.record(r.sbn);
                         EventLogTags.writeNotificationCanceled(mNotificationList.get(index).getKey(),
                                 REASON_PACKAGE_MARKED_SPAM);
