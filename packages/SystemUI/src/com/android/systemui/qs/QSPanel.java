@@ -118,13 +118,6 @@ public class QSPanel extends ViewGroup {
     protected Vibrator mVibrator;
 
     private SettingsObserver mSettingsObserver;
-    private boolean mHideQsTilesWithSensitiveData;
-    private final KeyguardMonitor.Callback mKeyguardListener = new KeyguardMonitor.Callback() {
-        @Override
-        public void onKeyguardChanged() {
-            refreshAllTiles();
-        }
-    };
 
     private boolean mHideQsTilesWithSensitiveData;
     private final KeyguardMonitor.Callback mKeyguardListener = new KeyguardMonitor.Callback() {
