@@ -126,6 +126,14 @@ public class QSPanel extends ViewGroup {
         }
     };
 
+    private boolean mHideQsTilesWithSensitiveData;
+    private final KeyguardMonitor.Callback mKeyguardListener = new KeyguardMonitor.Callback() {
+        @Override
+        public void onKeyguardChanged() {
+            refreshAllTiles();
+        }
+    };
+
     public QSPanel(Context context) {
         this(context, null);
     }
