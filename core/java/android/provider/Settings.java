@@ -7518,15 +7518,6 @@ public final class Settings {
         public static final String SEARCH_PANEL_ENABLED = "search_panel_enabled";
 
         /**
-         * Whether to show quick settings tiles with sensitive data in secure lockscreens.
-         * 0 will ignore the sensitive data flag, anything else will take care of that
-         * flag. Default is off.
-         * @hide
-         */
-        public static final String LOCKSCREEN_HIDE_TILES_WITH_SENSITIVE_DATA =
-                "lockscreen_hide_qs_tiles_with_sensitive_data";
-
-        /**
          * Component to start when
          * {@link android.app.admin.DevicePolicyManager#PASSWORD_THIRD_PARTY_UNSECURED} is used as
          * the keyguard.
