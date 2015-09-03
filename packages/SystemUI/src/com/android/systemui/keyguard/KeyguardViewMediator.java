@@ -1617,7 +1617,7 @@ public class KeyguardViewMediator extends SystemUI {
     private void handleReset() {
         synchronized (KeyguardViewMediator.this) {
             if (DEBUG) Log.d(TAG, "handleReset");
-            mStatusBarKeyguardViewManager.reset(false);
+            mStatusBarKeyguardViewManager.reset();
         }
     }
 
