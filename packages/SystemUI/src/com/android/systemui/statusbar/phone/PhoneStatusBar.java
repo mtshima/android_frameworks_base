@@ -176,7 +176,6 @@ import com.android.systemui.statusbar.EmptyShadeView;
 import com.android.systemui.statusbar.ExpandableNotificationRow;
 import com.android.systemui.statusbar.GestureRecorder;
 import com.android.systemui.statusbar.KeyguardIndicationController;
-import com.android.systemui.statusbar.MediaExpandableNotificationRow;
 import com.android.systemui.statusbar.NotificationData;
 import com.android.systemui.statusbar.NotificationData.Entry;
 import com.android.systemui.statusbar.NotificationOverflowContainer;
@@ -2670,13 +2669,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     mMediaController.unregisterCallback(mMediaListener);
                 }
                 mMediaController = controller;
-                if (mediaNotification != null
-                        && mediaNotification.row != null
-                        && mediaNotification.row instanceof MediaExpandableNotificationRow) {
-                    ((MediaExpandableNotificationRow) mediaNotification.row)
-                            .setMediaController(controller);
-                }
-
 
                 if (mMediaController != null) {
                     mMediaController.registerCallback(mMediaListener);
@@ -3113,11 +3105,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     @Override  // NotificationData.Environment
     public String getCurrentMediaNotificationKey() {
         return mMediaNotificationKey;
-    }
-
-    @Override
-    protected MediaController getCurrentMediaController() {
-        return mMediaController;
     }
 
     public boolean isScrimSrcModeEnabled() {

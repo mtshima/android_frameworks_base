@@ -4897,13 +4897,6 @@ public final class Settings {
         public static final String OVERRIDE_CUSTOM_COLORS = "override_custom_colors";
 
         /**
-         * Whether to attach a queue to media notifications.
-         * Boolean setting.
-         * @hide
-         */
-        public static final String NOTIFICATION_PLAY_QUEUE = "notification_play_queue";
-
-        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -4989,9 +4982,9 @@ public final class Settings {
             LIVE_DISPLAY_HINTED,
             ALLOW_LIGHTS,
             NONE_IS_SILENT,
-            NOTIFICATION_PLAY_QUEUE,
-            NOTIFICATION_LIGHT_BRIGHTNESS_LEVEL,
-            NOTIFICATION_LIGHT_SCREEN_ON
+            ALLOW_LIGHTS,
+            NOTIFICATION_LIGHT_SCREEN_ON,
+            NOTIFICATION_LIGHT_BRIGHTNESS_LEVEL
         };
 
         /**
