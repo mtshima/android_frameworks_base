@@ -24,10 +24,12 @@ import android.animation.ValueAnimator;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.graphics.PorterDuff.Mode;
 import android.net.Uri;
 import android.os.Handler;
@@ -45,6 +47,7 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -762,7 +765,7 @@ public class NotificationPanelView extends PanelView implements
         if (event.getActionMasked() == MotionEvent.ACTION_DOWN && mExpandedHeight == 0
                 && mQsExpansionEnabled) {
             mTwoFingerQsExpandPossible = true;
-            resetQsPanelVisibility();
+            mStatusBar.resetQsPanelVisibility();
         }
         boolean twoFingerQsEvent = mTwoFingerQsExpandPossible
                 && (event.getActionMasked() == MotionEvent.ACTION_POINTER_DOWN
@@ -1223,7 +1226,7 @@ public class NotificationPanelView extends PanelView implements
         updateNotificationScrim(height);
         if (mKeyguardShowing) {
             updateHeaderKeyguard();
-            resetQsPanelVisibility();
+            mStatusBar.resetQsPanelVisibility();
         }
         if (mStatusBarState == StatusBarState.SHADE && mQsExpanded
                 && !mStackScrollerOverscrolling && mQsScrimEnabled) {
@@ -1444,12 +1447,22 @@ public class NotificationPanelView extends PanelView implements
                     ? View.VISIBLE : View.GONE);
             mTaskManagerPanel.setVisibility(expandVisually && taskManagerShowing
                     && !mKeyguardShowing ? View.VISIBLE : View.GONE);
+            updateTaskQSButton();
         }
     }
 
-    private void resetQsPanelVisibility() {
-        mQsPanel.setVisibility(View.VISIBLE);
-        mTaskManagerPanel.setVisibility(View.GONE);
+    private void updateTaskQSButton() {
+        Resources res = mContext.getResources();
+        ImageView image = (ImageView)
+                mHeader.findViewById(R.id.task_manager_button);
+        boolean expandVisually = mQsExpanded || mStackScrollerOverscrolling;
+        if (!mTaskManagerShowing) {
+            image.setImageDrawable(res.getDrawable(
+                R.drawable.ic_tasklist_switch_normal));
+        } else {
+            image.setImageDrawable(
+                    res.getDrawable(R.drawable.ic_quick_settings));
+        }
     }
 
     @Override
