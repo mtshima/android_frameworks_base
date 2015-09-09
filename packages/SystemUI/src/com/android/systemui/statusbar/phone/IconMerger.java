@@ -68,7 +68,7 @@ public class IconMerger extends LinearLayout {
         int width = getMeasuredWidth();
         if (mClockLocation == Clock.STYLE_CLOCK_CENTER) {
             int totalWidth = mContext.getResources().getDisplayMetrics().widthPixels;
-            width = totalWidth / 2 - mIconSize * 2;
+            width = totalWidth / 2 - mIconWidth * 2;
         }
         setMeasuredDimension(width - (width % mIconWidth), getMeasuredHeight());
     }
