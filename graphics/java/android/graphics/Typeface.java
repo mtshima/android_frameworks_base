@@ -350,7 +350,7 @@ public class Typeface {
      *
      * This should only be called once, from the static class initializer block.
      */
-    private static void init() {
+    private static void init(boolean forceSystemFonts) {
         // Load font config and initialize Minikin state
         File systemFontConfigLocation = getSystemFontConfigLocation();
         File themeFontConfigLocation = getThemeFontConfigLocation();
@@ -360,7 +360,7 @@ public class Typeface {
         File configFile = null;
         File fontDir;
 
-        if (themeConfigFile.exists()) {
+        if (!forceSystemFonts && themeConfigFile.exists()) {
             configFile = themeConfigFile;
             fontDir = getThemeFontDirLocation();
         } else {
@@ -416,14 +416,12 @@ public class Typeface {
             }
             for (FontListParser.Alias alias : fontConfig.aliases) {
                 Typeface base = systemFonts.get(alias.toName);
-                if (base != null) {
-                    Typeface newFace = base;
-                    int weight = alias.weight;
-                    if (weight != 400) {
-                        newFace = new Typeface(nativeCreateWeightAlias(base.native_instance, weight));
-                    }
-                    systemFonts.put(alias.name, newFace);
+                Typeface newFace = base;
+                int weight = alias.weight;
+                if (weight != 400) {
+                    newFace = new Typeface(nativeCreateWeightAlias(base.native_instance, weight));
                 }
+                systemFonts.put(alias.name, newFace);
             }
             sSystemFontMap = systemFonts;
 
@@ -439,15 +437,20 @@ public class Typeface {
         }
     }
 
+    /** @hide  */
+    public static void recreateDefaults() {
+        recreateDefaults(false);
+    }
+
     /**
      * Clears caches in java and skia.
      * Skia will then reparse font config
      * @hide
      */
-    public static void recreateDefaults() {
+    public static void recreateDefaults(boolean forceSystemFonts) {
         sTypefaceCache.clear();
-        if (sSystemFontMap != null) sSystemFontMap.clear();
-        init();
+        sSystemFontMap.clear();
+        init(forceSystemFonts);
 
         DEFAULT_INTERNAL = create((String) null, 0);
         DEFAULT_BOLD_INTERNAL = create((String) null, Typeface.BOLD);
@@ -465,7 +468,7 @@ public class Typeface {
     }
 
     static {
-        init();
+        init(false);
         // Set up defaults and typefaces exposed in public API
         DEFAULT_INTERNAL         = create((String) null, 0);
         DEFAULT_BOLD_INTERNAL    = create((String) null, Typeface.BOLD);
