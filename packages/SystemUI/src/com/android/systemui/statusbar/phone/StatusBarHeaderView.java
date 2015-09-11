@@ -769,14 +769,14 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.setClassName("com.android.settings",
             "com.android.settings.Settings$HeadsUpSettingsActivity");
-        mActivityStarter.startActivity(intent, true /* dismissShade */, false /* dismissKeyguard */);
+        mActivityStarter.startActivity(intent, true /* dismissShade */);
     }
 
     private void startTaskManagerLongClickActivity() {
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.setClassName("com.android.settings",
             "com.android.settings.Settings$RunningServicesActivity");
-        mActivityStarter.startActivity(intent, true /* dismissShade */, false /* dismissKeyguard */);
+        mActivityStarter.startActivity(intent, true /* dismissShade */);
     }
 
     public void setQSPanel(QSPanel qsp) {
