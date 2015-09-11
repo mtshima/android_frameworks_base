@@ -20,10 +20,10 @@ import android.content.Intent;
 
 /**
  * An interface to start activities. This is used to as a callback from the views to
- * {@link PhoneStatusBar} to allow custom handling for starting the activity, i.e. optionally
- * dismissing the Keyguard and shade.
+ * {@link PhoneStatusBar} to allow custom handling for starting the activity, i.e. dismissing the
+ * Keyguard.
  */
 public interface ActivityStarter {
-    public void startActivity(Intent intent, boolean dismissShade, boolean dismissKeyguard);
+    public void startActivity(Intent intent, boolean dismissShade);
     public void startAction(boolean dismissShade);
 }

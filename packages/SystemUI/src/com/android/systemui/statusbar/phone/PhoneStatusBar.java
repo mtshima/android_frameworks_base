@@ -3053,12 +3053,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     }
 
     @Override
-    public void startActivity(Intent intent, boolean dismissShade, boolean dismissKeyguard) {
-        if (dismissKeyguard) {
-            startActivityDismissingKeyguard(intent, false, dismissShade);
-        } else {
-            startActivityWithoutDismiss(intent, dismissShade);
-        }
+    public void startActivity(Intent intent, boolean dismissShade) {
+        startActivityDismissingKeyguard(intent, false, dismissShade);
     }
 
     @Override
@@ -4245,17 +4241,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             if (dismissShade) {
                 animateCollapsePanels(CommandQueue.FLAG_EXCLUDE_NONE, true /* force */);
             }
-    }
-
-    public void startActivityWithoutDismiss(final Intent intent, final boolean dismissShade) {
-        intent.setFlags(
-                Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        mContext.startActivityAsUser(
-                intent, new UserHandle(UserHandle.USER_CURRENT));
-        if (dismissShade) {
-            animateCollapsePanels(
-                    CommandQueue.FLAG_EXCLUDE_RECENTS_PANEL, true /* force */);
-        }
     }
 
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
