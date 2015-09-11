@@ -447,7 +447,7 @@ public class TaskManager {
                 try {
                     intent.setFlags((intent.getFlags()&~Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED)
                             | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    mActivityStarter.startActivity(intent, true, true /* dismissKeyguard */);
+                    mActivityStarter.startActivity(intent, true, false);
                     success = true;
                 } catch (Exception ee) {
                     Log.d(TAG,"start activity meets exception " + ee.getMessage());
@@ -459,7 +459,7 @@ public class TaskManager {
                 try {
                     intent.setFlags((intent.getFlags()&~Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED)
                             | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    mActivityStarter.startActivity(intent, true, true /* dismissKeyguard */);
+                    mActivityStarter.startActivity(intent, true, false);
                 } catch (Exception ee) {
                     Log.d(TAG,"start activity meets exception " + ee.getMessage());
                 }
