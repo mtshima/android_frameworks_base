@@ -706,7 +706,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.setClassName("com.android.settings",
             "com.android.settings.Settings$BatterySaverSettingsActivity");
-        mActivityStarter.startActivity(intent, true /* dismissShade */, true /* dismissKeyguard */);
+        mActivityStarter.startActivity(intent, true /* dismissShade */. true /* dismissKeyguard */);
     }
 
     private void startClockActivity() {
